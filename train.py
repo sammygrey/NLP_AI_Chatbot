@@ -116,7 +116,23 @@ for epoch in range(num_epochs):
         optimizer.step()
 
     #Print progress of epochs and loss for every 100 epochs
-    if (epoch+1) % 100 == 0:
+    if (epoch +1) % 100 == 0:
         print(f'epoch {epoch+1}/{num_epochs}, loss={loss.item():.4f}')
 
-    print(f'final loss, loss={loss.item():.4f}')
+print(f'final loss, loss={loss.item():.4f}')
+
+    #Need to save the data 
+data = {
+    "model_state": model.state_dict(),
+    "input_size": input_size,
+    "output_size": output_size,
+    "hidden_size": hidden_size,
+    "all_words": all_words,
+    "tags": tags
+}
+
+FILE = "data.pth"
+torch.save(data, FILE)
+
+print(f'training complete, file saved to {FILE}')
+#Should save our training data to a pytorch file called "data"
