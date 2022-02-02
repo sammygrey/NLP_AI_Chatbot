@@ -30,6 +30,7 @@ After our text is broken down into it's most basic, interpretable form, we are a
 
 <h2> Deployment </h2>
 In order to deploy this project, simply download the code to your local I.D.E. and
+
 ```
 python3 train.py
 
