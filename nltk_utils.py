@@ -23,52 +23,31 @@ def tokenize(sentence):
 def stem(word):
     return stemmer.stem(word.lower())
 
+#Bag of Words Function
 def bag_of_words(tokenized_sentence, all_words):
-    #When we use this function, we have our tokenized sentence as well as all our words
-    #So we look at each word in the sentence, and if it is available in the all_words array, 
-    #We put a 1 at the position of where that word is found
     tokenized_sentence = [stem(w) for w in tokenized_sentence]
-    #Now we create our "bag" and initialize with all 0s
-
     bag = np.zeros(len(all_words), dtype=np.float32)
-    #Now we loop for our all words, so for index and words in all our words
-    # We check, if this word is in our tokenized sentence, it will return a value of 1 at the specified index
-    # Then we will return the bag
     for idx, w in enumerate(all_words):
         if w in tokenized_sentence:
             bag[idx] = 1.0
-    
     return bag
 
-#With the below print statement, we see the function of Bag of Words in operatio
+
+#TODO: Test our function with the below sentence to visualize Tokenization. 
+#TODO CONT: What is the purpose of tokenizing our text? 
+#Testing our Tokenizer
+test_sentence = "I will not live in peace until I find the Avatar!"
+
+#TODO: Test our Stemming function on the below words. 
+#TODO CONT: How does stemming affect our data?
+words = ["Organize", "organizes", "organizing", "disorganized"]
+
+
+#TODO: Implement the above Bag of Words function on the below sentence and words. 
+#TODO (CONTINUED): What does the Bag of Words model do? Why would we use Bag of Words here instead of TF-IDF or Word2Vec?
 print("Testing our bag_of_words function")
-sentence = ["hello", "how", "are", "you"]
-words = ["hi", "hello", "I", "you", "bye", "thank", "cool"]
-bog = bag_of_words(sentence, words)
-print(bog)
+sentence = ["I", "will", "now", "live", "in", "peace", "until", "I", "find", "the", "Avatar"]
+words = ["hi", "hello", "I", "you", "the", "bye", "in", "cool", "wild", "find"]
 print("--------------")
 
-#Test of our imports, Tokenizer, and Stemming.
-#Tokenizer
-test = "Is anyone there?"
-print("Before tokenization")
-print(test)
-print("_____________")
-print("After Tokenization")
-test = tokenize(test)
-print(test)
-#What we should expect from above is our original sentence of "Is Anyone There?" 
-#After undergoing tokenization, we should see our sentence split up
-#Use python nltk_utils.py to run, if using python version 3.X.X, using python3 nltk_utils.py to run
-
-#Stemming
-words = ["Organize", "organizes", "organizing"]
-print("Before Stemming")
-print(words)
-print("_________________")
-stemmed_words = [stem(w) for w in words]
-print("After Stemming")
-print(stemmed_words)
-
-#We see our sentence is broken down to its root word of organ, organ, and organ with suffix and prefixes
 

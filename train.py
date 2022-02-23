@@ -5,18 +5,13 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from model import NeuralNet
 from nltk_utils import tokenize, stem, bag_of_words
-#Reading in our json file and loading as intents, changes it into a python object
 with open('intents.json', 'r') as f:
     intents = json.load(f)
 
 all_words = []
 tags = []
 xy = []
-#Essentially look into the "intents" key in the json file, then the "tag" key under intents
-# We append our tag key onto our tag array
-# For each pattern in our intents with the key "patterns", we apply a tokenization
-# We then place it into the all words array. This is essentially all our words in the intents.json file
-# We extend into the all_words array because we dont want to append arrays onto arrays
+
 for intent in intents['intents']:
     tag = intent['tag']
     tags.append(tag)
@@ -27,32 +22,24 @@ for intent in intents['intents']:
 
 print(all_words)
 ignore_words = ['?', '!', '.', ',']
-#We dont want punctuation marks
+#We don't want punctuation marks
 all_words = [stem(w) for w in all_words if w not in ignore_words]
 
 print("---------------")
-print("All our words after stemming")
+print("All our words after tokenization")
 print(all_words)
 
-#Remove duplicate elements and return a list of our words
-# We have now tokenized, stemmed, and excluded punctuation characters from our 
 all_words = sorted(set(all_words))
 tags = sorted(set(tags))
-
 
 #Now we are creating the lists to train our data
 X_train = []
 y_train = []
 for (pattern_sentence, tag) in xy:
-    #pattern_sentenced is already tokenized
     bag = bag_of_words(pattern_sentence, all_words)
     X_train.append(bag)
-
-    #For Y data, we have numerical labels for our tags
-    # I.E. Our first tag is indexed as 0, second tag indexed as 1, so forth
     label = tags.index(tag)
     y_train.append(label)
-    #Usually, you want a one-hot encoding, but since we are using PyTorch, we are using only class labels
 
 #Convert into a numpy array
 X_train = np.array(X_train)
@@ -66,28 +53,25 @@ class ChatDataset(Dataset):
         self.x_data = X_train
         self.y_data = y_train
 
-    #To later access dataset with index idx
     def __getitem__(self, index):
         return self.x_data[index], self.y_data[index]
 
     def __len__(self):
         return self.n_samples
 
-#Hyperparamters
+#TODO: How do these hyperparameters affect optimization of our chatbot? 
 batch_size = 8
 hidden_size = 8
 output_size = len(tags)
 learning_rate = 0.001
 num_epochs = 1000
 
-#Lengths of each bag of words we created, which is the same length of all words
 input_size = len(X_train[0])
 print("Below is the Input Size of our Neural Network")
 print(input_size, len(all_words))
 print("Below is the output size of our neural network, which should match the amount of tags ")
 print(output_size, tags)
 
-#num_workers is for threading, can set to 0 
 dataset = ChatDataset()
 train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True)
 
@@ -96,6 +80,9 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = NeuralNet(input_size, hidden_size, output_size).to(device)
 
 #Loss and Optimizer
+
+#TODO: Experiment with another optimizer and note any differences in loss of our model. Does the final loss increase or decrease? 
+#TODO CONT: Speculate on why your changed optimizer may increase or decrease final loss
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
@@ -106,12 +93,12 @@ for epoch in range(num_epochs):
 
         #Forward pass
         outputs = model(words)
-        #Calculation of the loss is our CrossEntropyLoss with predicted outputs and actual labels
         loss = criterion(outputs, labels)
 
         #backward and optimizer step 
         optimizer.zero_grad()
-        #Calculate the backpropogation
+
+        #Calculate the backpropagation
         loss.backward()
         optimizer.step()
 
