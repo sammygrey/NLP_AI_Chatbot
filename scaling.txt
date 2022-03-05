@@ -1,0 +1,5 @@
+Deploying this chatbot to a social media site, or platform is pretty straightforward. First, we should save our model in something akin to a hadoop file.
+Next, we create a web application using any number of things like Flask, or Django for a server to handle our responses. For something like Discord we can
+run a Flask app and make API calls to the Discord API with a key and such to have our bot actually output on discord. After this we would parse user input, sending
+that directly to our webapp that would run it through the model and evaluate what to do. I'm not entirely sure the process of creating an application like this on
+a platform like Twitter, but I'm guessing similar API calls are available to Twitter bots. 

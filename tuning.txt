@@ -1,0 +1,101 @@
+1. I change the epochs from 100 to 500, logging every 10%
+
+Before Tuning: // this was way too little epochs lmao
+epoch 10/100, loss=1.118381
+epoch 20/100, loss=1.097335
+epoch 30/100, loss=1.048253
+epoch 40/100, loss=0.914533
+epoch 50/100, loss=0.945411
+epoch 60/100, loss=0.715308
+epoch 70/100, loss=0.648434
+epoch 80/100, loss=0.676156
+epoch 90/100, loss=0.488190
+epoch 100/100, loss=0.369640
+
+After Tuning: // much better but we can do more
+epoch 50/500, loss=1.025626
+epoch 100/500, loss=0.462452
+epoch 150/500, loss=0.218466
+epoch 200/500, loss=0.169774
+epoch 250/500, loss=0.012925
+epoch 300/500, loss=0.012884
+epoch 350/500, loss=0.003247
+epoch 400/500, loss=0.011528
+epoch 450/500, loss=0.004552
+epoch 500/500, loss=0.003062
+
+2. changed input size from 100 to 500
+
+Before Tuning: 
+epoch 50/500, loss=1.025626
+epoch 100/500, loss=0.462452
+epoch 150/500, loss=0.218466
+epoch 200/500, loss=0.169774
+epoch 250/500, loss=0.012925
+epoch 300/500, loss=0.012884
+epoch 350/500, loss=0.003247
+epoch 400/500, loss=0.011528
+epoch 450/500, loss=0.004552
+epoch 500/500, loss=0.003062
+
+After Tuning: //over a 50% loss reduction at epoch 50, epic
+epoch 50/500, loss=0.490958
+epoch 100/500, loss=0.060957
+epoch 150/500, loss=0.005915
+epoch 200/500, loss=0.007251
+epoch 250/500, loss=0.001221
+epoch 300/500, loss=0.001807
+epoch 350/500, loss=0.000322
+epoch 400/500, loss=0.001108
+epoch 450/500, loss=0.000932
+epoch 500/500, loss=0.000888
+
+3. changed hidden layer size from 100 to 200
+
+Before Tuning
+epoch 50/500, loss=0.490958
+epoch 100/500, loss=0.060957
+epoch 150/500, loss=0.005915
+epoch 200/500, loss=0.007251
+epoch 250/500, loss=0.001221
+epoch 300/500, loss=0.001807
+epoch 350/500, loss=0.000322
+epoch 400/500, loss=0.001108
+epoch 450/500, loss=0.000932
+epoch 500/500, loss=0.000888
+
+After Tuning: //starts out really good but after 450 epochs it looks like it goes downhill
+epoch 50/500, loss=0.533504
+epoch 100/500, loss=0.036033
+epoch 150/500, loss=0.012288
+epoch 200/500, loss=0.002272
+epoch 250/500, loss=0.001729
+epoch 300/500, loss=0.002040
+epoch 350/500, loss=0.000719
+epoch 400/500, loss=0.000606
+epoch 450/500, loss=0.000563
+epoch 500/500, loss=0.001729
+
+4. changed epochs from 500 to 450
+Before Tuning:
+epoch 50/500, loss=0.533504
+epoch 100/500, loss=0.036033
+epoch 150/500, loss=0.012288
+epoch 200/500, loss=0.002272
+epoch 250/500, loss=0.001729
+epoch 300/500, loss=0.002040
+epoch 350/500, loss=0.000719
+epoch 400/500, loss=0.000606
+epoch 450/500, loss=0.000563
+epoch 500/500, loss=0.001729
+
+After Tuning: //amazing, im happy with this
+epoch 50/450, loss=0.440327
+epoch 100/450, loss=0.033079
+epoch 150/450, loss=0.011803
+epoch 200/450, loss=0.001938
+epoch 250/450, loss=0.000576
+epoch 300/450, loss=0.000791
+epoch 350/450, loss=0.000777
+epoch 400/450, loss=0.000681
+epoch 450/450, loss=0.000396

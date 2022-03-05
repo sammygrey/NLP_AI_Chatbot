@@ -1,3 +1,7 @@
 torch
 numpy
 nltk
+transformers
+sklearn
+pandas
+torchinfo
