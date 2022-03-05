@@ -33,21 +33,37 @@ def bag_of_words(tokenized_sentence, all_words):
     return bag
 
 
-#TODO: Test our function with the below sentence to visualize Tokenization. 
-#TODO CONT: What is the purpose of tokenizing our text? 
+#Test our function with the below sentence to visualize Tokenization. 
+
+#What is the purpose of tokenizing our text?:
+#Tokenizing our text allows us to use the individual parts of it, be that words, phrases, or punctuation!
 #Testing our Tokenizer
 test_sentence = "I will not live in peace until I find the Avatar!"
+tokens = tokenize(test_sentence)
+for term in tokens:
+        print(term)
 
-#TODO: Test our Stemming function on the below words. 
-#TODO CONT: How does stemming affect our data?
+#Test our Stemming function on the below words. 
+
+#How does stemming affect our data?:
+#Stemming is the process of removing part of a word, in our case we are trying to 
+#get the root of the word so we will chop off plural indicators, past tense, stuff like that
 words = ["Organize", "organizes", "organizing", "disorganized"]
+for word in words:
+    print(stem(word))
 
+#Implement the above Bag of Words function on the below sentence and words. 
 
-#TODO: Implement the above Bag of Words function on the below sentence and words. 
-#TODO (CONTINUED): What does the Bag of Words model do? Why would we use Bag of Words here instead of TF-IDF or Word2Vec?
+#What does the Bag of Words model do? Why would we use Bag of Words here instead of TF-IDF or Word2Vec?:
+#The bag of words model converts the words/tokens we have provided to a pattern of numbers that the neural net can understand. 
+#Words in a sentence are assigned avalue of 1 while non-present words are assigned 0.
+#We wouldn't want to use tf-idf or word2vec here because we don't really have a preexisting corpus to quantify the weight of terms 
+#in a document, it makes more sense to pass in the sentence and words into a bag of words model in this case
+
 print("Testing our bag_of_words function")
 sentence = ["I", "will", "now", "live", "in", "peace", "until", "I", "find", "the", "Avatar"]
 words = ["hi", "hello", "I", "you", "the", "bye", "in", "cool", "wild", "find"]
+print(bag_of_words(sentence,words))
 print("--------------")
 
 

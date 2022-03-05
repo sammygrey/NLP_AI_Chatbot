@@ -60,11 +60,11 @@ class ChatDataset(Dataset):
         return self.n_samples
 
 #TODO: How do these hyperparameters affect optimization of our chatbot? 
-batch_size = 8
-hidden_size = 8
-output_size = len(tags)
-learning_rate = 0.001
-num_epochs = 1000
+batch_size = 8 #batch size for batch training to make loading faster -> number of parts used in one iteration
+hidden_size = 8 #number of features of a hidden state for the nn
+output_size = len(tags) #the number of different classes (tags) we are outputting to
+learning_rate = 0.001 #step size at each iteration while moving towards a (local OR global) minimum for our loss function
+num_epochs = 1000 #number of times the training process will repeat
 
 input_size = len(X_train[0])
 print("Below is the Input Size of our Neural Network")
@@ -81,10 +81,13 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 
 #Loss and Optimizer
 
-#TODO: Experiment with another optimizer and note any differences in loss of our model. Does the final loss increase or decrease? 
-#TODO CONT: Speculate on why your changed optimizer may increase or decrease final loss
+#Experiment with another optimizer and note any differences in loss of our model. Does the final loss increase or decrease? 
+#Final loss changed from 0.0003 to 1.7095 using the SGD optimizer
+#Speculate on why your changed optimizer may increase or decrease final loss
+#SGD is regarded as being pretty unstable, being noisy and not performing well with small datasets like ours, adam is a lot more efficient in that regard
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+#optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate) //originally tried doing this with LBFGS but threw an error, I can't be bothered
 
 for epoch in range(num_epochs):
     for (words, labels) in train_loader:
@@ -93,7 +96,7 @@ for epoch in range(num_epochs):
 
         #Forward pass
         outputs = model(words)
-        loss = criterion(outputs, labels)
+        loss = criterion(outputs, labels.type(torch.LongTensor)) #need to cast to longtensor here to not throw an error
 
         #backward and optimizer step 
         optimizer.zero_grad()
